@@ -3,23 +3,22 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
+import { WHATSAPP_URL } from "@/lib/contact-links";
 
 export default function WhatsAppButton() {
-  const phone = process.env.NEXT_PUBLIC_WHATSAPP_PHONE?.replace(/\D/g, "");
   const [visible, setVisible] = useState(false);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (!phone) return;
     const timer = setTimeout(() => setVisible(true), 2000);
     return () => clearTimeout(timer);
-  }, [phone]);
+  }, []);
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.a
-          href={`https://wa.me/${phone}`}
+          href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Написать в WhatsApp"

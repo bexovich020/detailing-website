@@ -4,7 +4,7 @@ import Services from "@/components/Services";
 import Process from "@/components/Process";
 import Gallery from "@/components/Gallery";
 import Reviews from "@/components/Reviews";
-import ContactForm from "@/components/ContactForm";
+import ContactOptions from "@/components/ContactOptions";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
@@ -17,7 +17,7 @@ export default function Home() {
       <Process />
       <Gallery />
       <Reviews />
-      <ContactForm />
+      <ContactOptions />
       <Footer />
       <WhatsAppButton />
     </main>

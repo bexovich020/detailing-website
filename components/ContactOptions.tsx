@@ -74,9 +74,7 @@ export default function ContactOptions() {
               <MessageCircle className="h-5 w-5 shrink-0" aria-hidden />
               <span>Написать в WhatsApp</span>
             </a>
-            <p className="mt-3 text-center text-xs leading-relaxed text-muted">
-              Сообщение о записи и свободных датах будет заполнено заранее
-            </p>
+
 
             <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
               <a

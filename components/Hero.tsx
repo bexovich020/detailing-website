@@ -22,8 +22,8 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-x-clip bg-black">
-      <div className="grid grid-cols-1 lg:min-h-[min(900px,100svh)] lg:grid-rows-[minmax(700px,100svh)]">
-        <div className="relative z-20 flex flex-col items-center px-5 pb-8 pt-[6.5rem] text-center md:px-8 md:pb-10 md:pt-28 lg:col-start-1 lg:row-start-1 lg:h-full lg:justify-center lg:pb-24 lg:pt-24">
+      <div className="grid min-h-[100svh] grid-cols-1 md:min-h-0 lg:min-h-[min(900px,100svh)] lg:grid-rows-[minmax(700px,100svh)]">
+        <div className="relative z-20 flex min-h-[100svh] flex-col items-center justify-center px-5 pb-8 pt-[6.5rem] text-center md:min-h-0 md:justify-start md:px-8 md:pb-10 md:pt-28 lg:col-start-1 lg:row-start-1 lg:h-full lg:justify-center lg:pb-24 lg:pt-24">
           <motion.p
             custom={0}
             variants={fadeUp}
@@ -75,7 +75,7 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        <div className="relative z-0 aspect-[4/5] w-full overflow-hidden sm:aspect-[16/10] lg:col-start-1 lg:row-start-1 lg:aspect-auto lg:h-full lg:min-h-[100svh]">
+        <div className="absolute inset-0 z-0 h-full w-full overflow-hidden md:relative md:inset-auto md:aspect-[16/10] md:h-auto lg:col-start-1 lg:row-start-1 lg:aspect-auto lg:h-full lg:min-h-[100svh]">
           <Image
             src={media.hero.src}
             alt={media.hero.alt}
@@ -84,7 +84,7 @@ export default function Hero() {
             className={`object-cover ${media.hero.position}`}
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 lg:bg-gradient-to-b lg:from-black/70 lg:via-black/35 lg:to-black/90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/35 to-black/60 md:bg-gradient-to-t md:from-black/40 md:via-transparent md:to-black/20 lg:bg-gradient-to-b lg:from-black/70 lg:via-black/35 lg:to-black/90" />
         </div>
 
       </div>

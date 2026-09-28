@@ -1,108 +1,82 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { Clock, MapPin, MessageCircle, Phone, Send } from "lucide-react";
-import {
-  DISPLAY_PHONE,
-  PHONE_URL,
-  TELEGRAM_URL,
-  TELEGRAM_USERNAME,
-  WHATSAPP_URL,
-} from "@/lib/contact-links";
+import { useRef } from "react";
+import Image from "next/image";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { MessageCircle, Phone, Send } from "lucide-react";
+import { media } from "@/lib/media";
+import { DISPLAY_PHONE, PHONE_URL, TELEGRAM_URL, TELEGRAM_USERNAME, WHATSAPP_URL } from "@/lib/contact-links";
+import SectionLabel from "@/components/ui/SectionLabel";
+import LineReveal from "@/components/ui/LineReveal";
+import MagneticButton from "@/components/ui/MagneticButton";
 
-const studioAddress = process.env.NEXT_PUBLIC_STUDIO_ADDRESS;
-const studioHours = process.env.NEXT_PUBLIC_STUDIO_HOURS;
+const address = process.env.NEXT_PUBLIC_STUDIO_ADDRESS;
+const hours = process.env.NEXT_PUBLIC_STUDIO_HOURS;
 
 export default function ContactOptions() {
+  const ref = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], reduceMotion ? ["0%", "0%"] : ["-12%", "12%"]);
+
+  const details = [
+    { label: "Телефон", value: DISPLAY_PHONE, href: PHONE_URL },
+    { label: "Telegram", value: `@${TELEGRAM_USERNAME}`, href: TELEGRAM_URL, external: true },
+    ...(address ? [{ label: "Адрес", value: address }] : []),
+    ...(hours ? [{ label: "Часы работы", value: hours }] : []),
+  ];
 
   return (
-    <section id="contact" className="bg-black py-20 md:py-32">
-      <div className="mx-auto max-w-site px-5 md:px-8">
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-24">
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.55 }}
-            className="text-left"
-          >
-            <h2 className="font-display text-[40px] leading-[1.05] tracking-wide text-white md:text-5xl">
-              ЗАПИШИТЕСЬ
-              <br />
-              НА ДЕТЕЙЛИНГ
-            </h2>
-            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-muted">
-              Расскажите, что хотите сделать с автомобилем. Обсудим подходящую услугу, стоимость и свободные даты.
-            </p>
+    <section ref={ref} id="contact" aria-labelledby="contact-title" className="relative isolate overflow-hidden bg-bg">
+      <motion.div style={{ y }} className="absolute inset-[-12%_0] -z-20 will-change-transform">
+        <Image src={media.cta.src} alt={media.cta.alt} fill sizes="100vw" className={`object-cover ${media.cta.position}`} />
+      </motion.div>
+      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-bg via-bg/80 to-bg/20" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-bg via-transparent to-bg" />
 
-            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm">
-              <a className="text-white/75 transition-colors hover:text-gold" href={PHONE_URL}>{DISPLAY_PHONE}</a>
-              <a className="text-white/75 transition-colors hover:text-gold" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Telegram · @{TELEGRAM_USERNAME}</a>
-            </div>
+      <div className="container-site flex min-h-[100svh] flex-col justify-center py-28">
+        <SectionLabel index="09">Запись</SectionLabel>
+        <LineReveal
+          id="contact-title"
+          lines={["Готовы вернуть", "автомобилю", "идеальный вид?"]}
+          className="display-lg mt-6 max-w-5xl text-fg"
+        />
+        <p className="mt-8 max-w-md text-[15px] leading-relaxed text-fg/70 md:text-base">
+          Расскажите, что хотите сделать с автомобилем. Обсудим подходящую услугу, стоимость и свободные даты.
+        </p>
 
-            {(studioAddress || studioHours) && (
-              <ul className="mt-10 space-y-4 text-sm text-white/80">
-                {studioAddress && (
-                  <li className="flex items-start gap-3">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden />
-                    <span>{studioAddress}</span>
-                  </li>
-                )}
-                {studioHours && (
-                  <li className="flex items-start gap-3">
-                    <Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden />
-                    <span>{studioHours}</span>
-                  </li>
-                )}
-              </ul>
-            )}
-          </motion.div>
-
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.55, delay: reduceMotion ? 0 : 0.08 }}
-            className="border border-border bg-card p-6 md:p-10"
-          >
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">
-              Связаться со студией
-            </p>
-
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 flex min-h-[68px] w-full items-center justify-center gap-3 rounded-full bg-[#a9cbc6] px-6 py-4 text-center text-base font-semibold text-[#0b1012] transition-colors hover:bg-[#c0d9d5] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a9cbc6]"
-            >
-              <MessageCircle className="h-5 w-5 shrink-0" aria-hidden />
-              <span>Написать в WhatsApp</span>
-            </a>
-
-
-            <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <a
-                href={TELEGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-border px-4 py-3 text-sm font-medium text-white transition-colors hover:border-gold/70 hover:text-gold"
-              >
-                <Send className="h-4 w-4" aria-hidden />
-                Telegram
-              </a>
-              <a
-                href={PHONE_URL}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-border px-4 py-3 text-sm font-medium text-white transition-colors hover:border-gold/70 hover:text-gold"
-              >
-                <Phone className="h-4 w-4" aria-hidden />
-                Позвонить
-              </a>
-            </div>
-
-            <p className="mt-6 text-center text-sm text-muted">Ответим удобным для вас способом</p>
-          </motion.div>
+        <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <MagneticButton href={WHATSAPP_URL} external variant="accent" icon={<MessageCircle className="h-4 w-4" strokeWidth={1.6} aria-hidden />}>
+            Написать в WhatsApp
+          </MagneticButton>
+          <MagneticButton href={TELEGRAM_URL} external variant="ghost" icon={<Send className="h-4 w-4" strokeWidth={1.6} aria-hidden />}>
+            Telegram
+          </MagneticButton>
+          <MagneticButton href={PHONE_URL} variant="ghost" icon={<Phone className="h-4 w-4" strokeWidth={1.6} aria-hidden />}>
+            Позвонить
+          </MagneticButton>
         </div>
+
+        <dl className="mt-20 grid max-w-4xl grid-cols-1 gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
+          {details.map((d) => (
+            <div key={d.label} className="bg-bg/70 p-5 backdrop-blur-sm">
+              <dt className="meta">{d.label}</dt>
+              <dd className="mt-3 text-[15px] text-fg">
+                {d.href ? (
+                  <a
+                    href={d.href}
+                    {...(d.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="transition-colors duration-300 hover:text-accent"
+                  >
+                    {d.value}
+                  </a>
+                ) : (
+                  d.value
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

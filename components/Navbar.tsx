@@ -1,119 +1,168 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Menu, X } from "lucide-react";
-
-const links = [
-  { href: "#services", label: "Услуги" },
-  { href: "#process", label: "Процесс" },
-  { href: "#gallery", label: "Галерея" },
-  { href: "#contact", label: "Контакты" },
-];
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+} from "framer-motion";
+import { navLinks } from "@/lib/content";
+import { DISPLAY_PHONE, PHONE_URL, TELEGRAM_URL, WHATSAPP_URL } from "@/lib/contact-links";
+import { EASE_EXPO, EASE_IN_OUT, INTRO_DELAY } from "@/lib/motion";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
+  const { scrollY, scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 });
+
+  useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 40));
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
-
-  useEffect(() => {
+    document.documentElement.style.overflow = open ? "hidden" : "";
     if (!open) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.documentElement.style.overflow = "";
     };
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
   }, [open]);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[border-color,background-color] duration-300 ${
-        scrolled
-          ? "border-b border-gold/25 bg-black/90 backdrop-blur-sm"
-          : "border-b border-transparent bg-black/30"
-      }`}
-    >
-      <nav aria-label="Основная навигация" className="mx-auto flex h-14 max-w-site items-center justify-between px-5 md:h-16 md:px-8">
-        <a
-          href="#"
-          className="font-display text-xl tracking-[0.18em] text-gold md:text-[22px]"
+    <>
+      <motion.header
+        initial={reduceMotion ? false : { y: -24, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: EASE_EXPO, delay: reduceMotion ? 0 : INTRO_DELAY + 0.5 }}
+        className={`fixed inset-x-0 top-0 z-[60] transition-[background-color,border-color,backdrop-filter] duration-700 ease-expo ${
+          scrolled && !open
+            ? "border-b border-line bg-bg/70 backdrop-blur-xl backdrop-saturate-150"
+            : "border-b border-transparent bg-transparent"
+        }`}
+      >
+        <nav
+          aria-label="Основная навигация"
+          className={`container-site flex items-center justify-between transition-[height] duration-700 ease-expo ${
+            scrolled ? "h-16" : "h-20 md:h-24"
+          }`}
         >
-          APEX DETAIL
-        </a>
-
-        <div className="hidden items-center gap-9 lg:flex">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-[13px] tracking-wide text-white/70 transition-colors hover:text-white"
-            >
-              {link.label}
-            </a>
-          ))}
-          <a href="#contact" className="btn-primary !px-5 !py-2 text-[13px]">
-            Записаться
+          <a href="#top" className="group flex items-baseline gap-2" aria-label="APEX DETAIL — на главную">
+            <span className="font-display text-xl font-semibold uppercase tracking-[0.2em] text-fg md:text-[22px]">
+              Apex
+            </span>
+            <span className="h-1.5 w-1.5 bg-accent transition-transform duration-500 ease-expo group-hover:rotate-45" aria-hidden />
+            <span className="font-display text-xl font-light uppercase tracking-[0.2em] text-fg/70 md:text-[22px]">
+              Detail
+            </span>
           </a>
-        </div>
 
-        <button
-          type="button"
-          aria-label={open ? "Закрыть меню" : "Открыть меню"}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          className="flex h-11 w-11 items-center justify-center text-white lg:hidden"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </nav>
+          <ul className="hidden items-center gap-8 lg:flex">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className="group relative py-2 text-[12px] font-medium uppercase tracking-[0.16em] text-fg/65 transition-colors duration-300 hover:text-fg"
+                >
+                  {link.label}
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-0 bottom-0 h-px origin-right scale-x-0 bg-accent transition-transform duration-500 ease-expo group-hover:origin-left group-hover:scale-x-100"
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex items-center gap-2">
+            <a
+              href="#contact"
+              className="group relative hidden h-10 items-center overflow-hidden border border-fg/25 px-5 text-[12px] font-semibold uppercase tracking-[0.16em] text-fg transition-colors duration-500 ease-expo hover:border-fg hover:text-bg sm:inline-flex"
+            >
+              <span aria-hidden className="absolute inset-0 -z-0 origin-bottom scale-y-0 bg-fg transition-transform duration-500 ease-expo group-hover:scale-y-100" />
+              <span className="relative">Записаться</span>
+            </a>
+
+            <button
+              type="button"
+              aria-label={open ? "Закрыть меню" : "Открыть меню"}
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+              onClick={() => setOpen((v) => !v)}
+              className="relative flex h-11 w-11 items-center justify-center lg:hidden"
+            >
+              <span
+                className={`absolute h-px w-6 bg-fg transition-transform duration-500 ease-expo ${open ? "rotate-45" : "-translate-y-1"}`}
+              />
+              <span
+                className={`absolute h-px w-6 bg-fg transition-transform duration-500 ease-expo ${open ? "-rotate-45" : "translate-y-1"}`}
+              />
+            </button>
+          </div>
+        </nav>
+
+        <motion.div
+          aria-hidden
+          style={{ scaleX: progress }}
+          className={`absolute inset-x-0 bottom-[-1px] h-px origin-left bg-accent transition-opacity duration-500 ${scrolled && !open ? "opacity-100" : "opacity-0"}`}
+        />
+      </motion.header>
 
       <AnimatePresence>
         {open && (
           <motion.div
             id="mobile-nav"
-            initial={reduceMotion ? false : { opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden border-t border-border bg-black lg:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Меню"
+            initial={reduceMotion ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}
+            animate={reduceMotion ? { opacity: 1 } : { clipPath: "inset(0 0 0% 0)" }}
+            exit={reduceMotion ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.8, ease: EASE_IN_OUT }}
+            className="fixed inset-0 z-[55] flex flex-col bg-surface lg:hidden"
           >
-            <div className="flex flex-col px-5 pb-8 pt-2">
-              {links.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="border-b border-white/[0.08] py-4 text-[15px] tracking-wide text-white"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <a
-                href="#contact"
-                onClick={() => setOpen(false)}
-                className="btn-primary mt-6 w-full"
-              >
-                Записаться
-              </a>
-            </div>
+            <div className="grid-overlay pointer-events-none absolute inset-0" aria-hidden />
+            <nav aria-label="Мобильная навигация" className="container-site relative flex flex-1 flex-col justify-center pt-20">
+              <ul className="flex flex-col">
+                {navLinks.map((link, i) => (
+                  <li key={link.href} className="overflow-hidden border-b border-line">
+                    <motion.a
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      initial={reduceMotion ? false : { y: "100%" }}
+                      animate={{ y: 0 }}
+                      exit={reduceMotion ? undefined : { y: "-100%" }}
+                      transition={{ duration: 0.7, ease: EASE_EXPO, delay: reduceMotion ? 0 : 0.25 + i * 0.05 }}
+                      className="flex items-baseline justify-between py-4"
+                    >
+                      <span className="font-display text-[clamp(2.2rem,10vw,3.5rem)] font-medium uppercase leading-none text-fg">
+                        {link.label}
+                      </span>
+                      <span className="meta tabular-nums">0{i + 1}</span>
+                    </motion.a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: reduceMotion ? 0 : 0.6 }}
+              className="container-site relative flex flex-wrap items-center justify-between gap-4 pb-[max(env(safe-area-inset-bottom),1.5rem)] pt-6"
+            >
+              <a href={PHONE_URL} className="text-sm text-fg">{DISPLAY_PHONE}</a>
+              <div className="flex gap-5 text-[12px] font-semibold uppercase tracking-[0.16em]">
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-accent">WhatsApp</a>
+                <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className="text-fg/70">Telegram</a>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

@@ -4,9 +4,21 @@ export function unsplash(id: string, width = 1600) {
 
 export const media = {
   hero: {
-    src: unsplash("photo-1711512972713-9c18f3df7a6d", 2400),
-    alt: "Премиальный автомобиль в тёмной студии",
-    position: "object-[center_62%]",
+    src: "/images/cinematic/hero.png",
+    alt: "Чёрное спортивное купе в тёмной студии под линейным светом",
+    position: "object-[68%_center]",
+  },
+  cta: {
+    src: "/images/cinematic/cta.png",
+    alt: "Задняя часть графитового автомобиля с отражением света на кузове",
+    position: "object-[70%_center]",
+  },
+  compare: {
+    after: {
+      src: "/images/cinematic/after.png",
+      alt: "Отполированный чёрный капот с зеркальным отражением студийного света",
+    },
+    swirls: "/images/cinematic/swirls.png",
   },
   services: {
     ceramic: {
@@ -41,8 +53,13 @@ export const media = {
     },
   },
   process: {
+    booking: {
+      src: unsplash("photo-1711512972553-40d5931bc685", 1400),
+      alt: "Автомобиль в студийном боксе перед началом работ",
+      position: "object-center",
+    },
     inspect: {
-      src: unsplash("photo-1711512972514-770522ab6b14", 1100),
+      src: unsplash("photo-1711512972514-770522ab6b14", 1400),
       alt: "Осмотр лакокрасочного покрытия автомобиля",
       position: "object-center",
     },
@@ -51,9 +68,9 @@ export const media = {
       alt: "Полировка кузова мастером в процессе работы",
       position: "object-[center_48%]",
     },
-    finish: {
-      src: unsplash("photo-1711512972644-bc0d50285809", 1100),
-      alt: "Кузов автомобиля с отражающим блеском",
+    handover: {
+      src: "/images/cinematic/handover.png",
+      alt: "Автомобиль после детейлинга и ключ в руке владельца",
       position: "object-center",
     },
   },
@@ -61,30 +78,38 @@ export const media = {
     {
       src: "/images/detailing/gallery/polishing-process.jpg",
       alt: "Мастер полирует красный кузов эксцентриковой машинкой в студии",
-      category: "ПОЛИРОВКА ЛКП",
+      category: "Полировка ЛКП",
       title: "Работа с лаком",
+      description: "Машинная полировка лакокрасочного покрытия.",
       position: "object-[center_46%]",
+      shape: "tall",
     },
     {
       src: "/images/detailing/gallery/care-wash.jpg",
       alt: "Пенная очистка стекла и кузова автомобиля",
-      category: "БЕРЕЖНАЯ МОЙКА",
+      category: "Бережная мойка",
       title: "Подготовка кузова",
+      description: "Пенная очистка перед основными работами.",
       position: "object-[center_48%]",
+      shape: "wide",
     },
     {
       src: "/images/detailing/gallery/interior-detail.jpg",
       alt: "Мастер очищает щёткой детали салона автомобиля",
-      category: "САЛОН",
+      category: "Салон",
       title: "Детейлинг салона",
+      description: "Очистка деталей интерьера щёткой.",
       position: "object-[center_50%]",
+      shape: "square",
     },
     {
       src: "/images/detailing/gallery/surface-water.jpg",
       alt: "Капли воды и отражения на поверхности кузова автомобиля",
-      category: "ДЕТАЛИ КУЗОВА",
+      category: "Детали кузова",
       title: "Капли и отражения",
+      description: "Поведение воды на поверхности кузова.",
       position: "object-[center_52%]",
+      shape: "tall",
     },
   ],
 } as const;

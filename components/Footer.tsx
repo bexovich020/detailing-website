@@ -10,7 +10,6 @@ export default function Footer() {
   const ref = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end end"] });
-  const y = useTransform(scrollYProgress, [0, 1], reduceMotion ? ["0%", "0%"] : ["45%", "0%"]);
 
   return (
     <footer ref={ref} className="relative overflow-hidden border-t border-line bg-bg pt-16 md:pt-24">
@@ -62,14 +61,6 @@ export default function Footer() {
         <p>Алматы, Казахстан</p>
       </div>
 
-      <div className="overflow-hidden" aria-hidden>
-        <motion.p
-          style={{ y }}
-          className="select-none whitespace-nowrap text-center font-display text-[20.5vw] font-semibold uppercase leading-[0.78] tracking-[-0.02em] text-fg/[0.06]"
-        >
-          Apex Detail
-        </motion.p>
-      </div>
     </footer>
   );
 }

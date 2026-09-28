@@ -14,16 +14,16 @@ function Principle({ item }: { item: (typeof principles)[number] }) {
   const line = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <li ref={ref} className="relative grid gap-4 py-10 md:grid-cols-12 md:items-end md:gap-8 md:py-14">
+    <li ref={ref} className="relative grid gap-3 py-8 sm:gap-4 sm:py-9 md:grid-cols-12 md:items-center md:gap-8 md:py-11">
       <motion.span style={{ scaleX: line }} className="absolute inset-x-0 top-0 h-px origin-left bg-line" aria-hidden />
       <span className="meta tabular-nums text-accent md:col-span-1">{item.number}</span>
       <motion.h3
         style={{ opacity, x }}
-        className="font-display text-[clamp(2.6rem,8vw,8.5rem)] font-medium uppercase leading-[0.88] text-fg md:col-span-8"
+        className="max-w-[15ch] font-display text-[clamp(2rem,5.2vw,5rem)] font-medium uppercase leading-[1.06] tracking-[-0.015em] text-fg md:col-span-8"
       >
         {item.title}
       </motion.h3>
-      <motion.p style={{ opacity }} className="max-w-xs text-[15px] leading-relaxed text-muted md:col-span-3 md:pb-3">
+      <motion.p style={{ opacity }} className="max-w-xs text-[14px] leading-relaxed text-muted md:col-span-3 md:pb-1">
         {item.text}
       </motion.p>
     </li>

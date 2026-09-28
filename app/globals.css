@@ -45,17 +45,17 @@ button {
 
   .display-xl {
     @apply font-display font-medium uppercase leading-[0.86] tracking-[-0.01em];
-    font-size: clamp(3.4rem, 11.5vw, 11.5rem);
+    font-size: clamp(3.25rem, 10vw, 9.5rem);
   }
 
   .display-lg {
     @apply font-display font-medium uppercase leading-[0.9] tracking-[-0.005em];
-    font-size: clamp(2.75rem, 7.5vw, 7.5rem);
+    font-size: clamp(2.65rem, 6.6vw, 6.6rem);
   }
 
   .display-md {
     @apply font-display font-medium uppercase leading-[0.95];
-    font-size: clamp(1.9rem, 3.6vw, 3.4rem);
+    font-size: clamp(1.85rem, 3.3vw, 3.1rem);
   }
 
   .meta {

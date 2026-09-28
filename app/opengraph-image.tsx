@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "APEX DETAIL — Automotive detailing in Almaty";
+export const alt = "APEX DETAIL — детейлинг кузова и салона в Алматы";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -60,7 +60,7 @@ export default function OpenGraphImage() {
               letterSpacing: -2,
             }}
           >
-            CARE FOR EVERY DETAIL
+            ДЕТЕЙЛИНГ КУЗОВА И САЛОНА
           </div>
         </div>
         <div

@@ -21,7 +21,7 @@ export default function Gallery() {
             ДЕТАЛИ, КОТОРЫЕ ВИДНО
           </h2>
           <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted">
-            Визуальные примеры процессов и свойств ухода за кузовом и салоном.
+            Полировка, очистка и уход за поверхностями кузова и салона.
           </p>
           <div className="section-divider mt-7 max-w-[140px]" />
         </motion.div>
@@ -81,12 +81,12 @@ export default function Gallery() {
         </div>
 
         <p className="mt-4 text-xs leading-relaxed text-muted/80">
-          Иллюстрации услуг и свойств материалов, не портфолио выполненных студией работ.
+          Иллюстративные фотографии процессов и свойств материалов. Это не портфолио работ студии.
         </p>
 
         <div className="mt-10 text-left md:mt-12">
-          <a href="#contact" className="btn-ghost w-full sm:w-auto">
-            Обсудить уход за автомобилем <span className="ml-2" aria-hidden>→</span>
+          <a href="#contact" className="btn-primary w-full sm:w-auto">
+            Узнать стоимость ухода <span className="ml-2" aria-hidden>→</span>
           </a>
         </div>
       </div>

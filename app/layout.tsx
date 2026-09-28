@@ -16,21 +16,21 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-  ),
+  ...(process.env.NEXT_PUBLIC_SITE_URL
+    ? { metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL) }
+    : {}),
   title: {
     default: "APEX DETAIL — автодетейлинг в Алматы",
     template: "%s | APEX DETAIL",
   },
   description:
-    "Полировка кузова, защитные покрытия и уход за салоном автомобиля в Алматы. Ознакомьтесь с услугами APEX DETAIL и оставьте заявку.",
+    "Детейлинг в Алматы: полировка кузова, химчистка салона, керамическое покрытие, тонировка и защита плёнкой. Уточните стоимость и запись в WhatsApp.",
   keywords:
     "автодетейлинг алматы, керамика авто, полировка кузова алматы, химчистка авто алматы",
   openGraph: {
     title: "APEX DETAIL — автодетейлинг в Алматы",
     description:
-      "Полировка кузова, защитные покрытия и уход за салоном автомобиля.",
+      "Полировка кузова, химчистка салона и защитные покрытия автомобиля в Алматы. Стоимость и запись — в WhatsApp.",
     locale: "ru_KZ",
     type: "website",
   },

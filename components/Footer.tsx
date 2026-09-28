@@ -31,10 +31,16 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/[0.08]">
-        <p className="mx-auto max-w-site px-5 py-5 text-left text-[11px] tracking-wide text-muted md:px-8">
-          © 2026 APEX DETAIL. Все права защищены.
-        </p>
+        <div className="mx-auto flex max-w-site flex-col gap-4 px-5 py-5 text-[11px] tracking-wide text-muted md:flex-row md:items-center md:justify-between md:px-8">
+          <p>© {new Date().getFullYear()} APEX DETAIL</p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs">
+            <a href={PHONE_URL} className="transition-colors hover:text-white">{DISPLAY_PHONE}</a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">WhatsApp</a>
+            <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">@{TELEGRAM_USERNAME}</a>
+          </div>
+        </div>
       </div>
     </footer>
   );
 }
+import { DISPLAY_PHONE, PHONE_URL, TELEGRAM_URL, TELEGRAM_USERNAME, WHATSAPP_URL } from "@/lib/contact-links";

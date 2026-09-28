@@ -9,14 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        black: "#0A0A0A",
-        graphite: "#141414",
-        card: "#1A1A1A",
-        border: "#2A2A2A",
-        gold: "#C9A84C",
-        "gold-dim": "#9A7A34",
-        white: "#F5F5F0",
-        muted: "#888888",
+        black: "#0B1012",
+        graphite: "#121A1D",
+        card: "#192326",
+        border: "#2A383B",
+        gold: "#A9CBC6",
+        "gold-dim": "#8EB5AF",
+        white: "#F3F4EF",
+        muted: "#A0ADAE",
+        paper: "#E9ECE8",
+        ink: "#172124",
+        "muted-ink": "#596669",
       },
       fontFamily: {
         display: ["var(--font-bebas)", "sans-serif"],

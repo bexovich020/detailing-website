@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { WHATSAPP_URL } from "@/lib/contact-links";
 
 const points = [
   { number: "01", title: "Под вашу задачу", text: "Сначала обсуждаем, что важно именно для вас и вашего автомобиля." },
@@ -8,11 +9,11 @@ const points = [
   { number: "03", title: "Внимание к деталям", text: "Работаем с кузовом и интерьером, учитывая их состояние." },
 ];
 
-export default function Reviews() {
+export default function StudioApproach() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="bg-graphite py-20 md:py-32">
+    <section className="bg-graphite py-20 md:py-28">
       <div className="mx-auto max-w-site px-5 md:px-8">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 20 }}
@@ -46,6 +47,9 @@ export default function Reviews() {
             </motion.article>
           ))}
         </div>
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-ghost mt-10 w-full sm:w-auto">
+          Обсудить задачу в WhatsApp <span className="ml-2" aria-hidden>→</span>
+        </a>
       </div>
     </section>
   );

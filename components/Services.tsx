@@ -69,7 +69,7 @@ export default function Services() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="services" className="bg-black py-20 md:py-32">
+    <section id="services" className="bg-black py-20 text-white md:py-28">
       <div className="mx-auto max-w-site px-5 md:px-8">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 20 }}
@@ -82,7 +82,7 @@ export default function Services() {
             НАШИ УСЛУГИ
           </h2>
           <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted">
-            Полный спектр премиального ухода за автомобилем
+            Выберите услугу или напишите нам — обсудим состояние автомобиля и подходящий объём работ.
           </p>
           <div className="section-divider mt-7 max-w-[140px]" />
         </motion.div>
@@ -100,7 +100,7 @@ export default function Services() {
                   duration: 0.5,
                   delay: reduceMotion ? 0 : i * 0.1,
                 }}
-                className="group flex flex-col bg-card ring-1 ring-inset ring-transparent transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:ring-gold"
+                className="group flex flex-col bg-card ring-1 ring-inset ring-white/[0.06] transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/30 hover:ring-gold/50"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
@@ -123,8 +123,8 @@ export default function Services() {
                   <p className="mt-3 flex-1 text-sm leading-[1.7] text-muted">
                     {service.description}
                   </p>
-                  <a href="#contact" className="mt-7 inline-flex min-h-11 items-center text-sm font-medium text-gold transition-colors hover:text-white focus-visible:text-white">
-                    Обсудить услугу <span className="ml-2" aria-hidden>→</span>
+                  <a href="#contact" className="mt-7 inline-flex min-h-11 items-center text-sm font-semibold text-gold transition-colors hover:text-white focus-visible:text-white">
+                    Узнать стоимость <span className="ml-2" aria-hidden>→</span>
                   </a>
                 </div>
               </motion.article>

@@ -33,8 +33,13 @@ export default function ContactOptions() {
               НА ДЕТЕЙЛИНГ
             </h2>
             <p className="mt-5 max-w-md text-[15px] leading-relaxed text-muted">
-              Напишите нам, чтобы уточнить стоимость, свободные даты и подходящий уход для вашего автомобиля.
+              Расскажите, что хотите сделать с автомобилем. Обсудим подходящую услугу, стоимость и свободные даты.
             </p>
+
+            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm">
+              <a className="text-white/75 transition-colors hover:text-gold" href={PHONE_URL}>{DISPLAY_PHONE}</a>
+              <a className="text-white/75 transition-colors hover:text-gold" href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer">Telegram · @{TELEGRAM_USERNAME}</a>
+            </div>
 
             {(studioAddress || studioHours) && (
               <ul className="mt-10 space-y-4 text-sm text-white/80">
@@ -69,7 +74,7 @@ export default function ContactOptions() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 flex min-h-[68px] w-full items-center justify-center gap-3 rounded bg-[#25D366] px-6 py-4 text-center text-base font-semibold text-black transition-colors hover:bg-[#35e477] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#25D366]"
+              className="mt-6 flex min-h-[68px] w-full items-center justify-center gap-3 rounded-full bg-[#a9cbc6] px-6 py-4 text-center text-base font-semibold text-[#0b1012] transition-colors hover:bg-[#c0d9d5] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a9cbc6]"
             >
               <MessageCircle className="h-5 w-5 shrink-0" aria-hidden />
               <span>Написать в WhatsApp</span>
@@ -81,25 +86,21 @@ export default function ContactOptions() {
                 href={TELEGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-12 items-center justify-center gap-2 border border-border px-4 py-3 text-sm font-medium text-white transition-colors hover:border-gold/70 hover:text-gold"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-border px-4 py-3 text-sm font-medium text-white transition-colors hover:border-gold/70 hover:text-gold"
               >
                 <Send className="h-4 w-4" aria-hidden />
                 Telegram
               </a>
               <a
                 href={PHONE_URL}
-                className="inline-flex min-h-12 items-center justify-center gap-2 border border-border px-4 py-3 text-sm font-medium text-white transition-colors hover:border-gold/70 hover:text-gold"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-border px-4 py-3 text-sm font-medium text-white transition-colors hover:border-gold/70 hover:text-gold"
               >
                 <Phone className="h-4 w-4" aria-hidden />
                 Позвонить
               </a>
             </div>
 
-            <p className="mt-6 text-center text-sm text-muted">
-              {DISPLAY_PHONE}
-              <span className="mx-2 text-white/20" aria-hidden>·</span>
-              @{TELEGRAM_USERNAME}
-            </p>
+            <p className="mt-6 text-center text-sm text-muted">Ответим удобным для вас способом</p>
           </motion.div>
         </div>
       </div>

@@ -1,54 +1,78 @@
-import { WHATSAPP_URL } from "@/lib/contact-links";
+"use client";
 
-const questions = [
-  {
-    question: "От чего зависит стоимость работ?",
-    answer:
-      "От выбранной услуги и состояния автомобиля. Напишите нам — уточним задачу и сориентируем по стоимости до записи.",
-  },
-  {
-    question: "Как понять, какая услуга нужна автомобилю?",
-    answer:
-      "Расскажите, что хотите изменить или защитить. Обсудим состояние автомобиля и подходящий объём работ.",
-  },
-  {
-    question: "Как записаться?",
-    answer:
-      "Напишите в WhatsApp или Telegram либо позвоните. Уточним свободные даты и договоримся о времени.",
-  },
-];
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { faqs } from "@/lib/content";
+import { WHATSAPP_URL } from "@/lib/contact-links";
+import { EASE_EXPO } from "@/lib/motion";
+import SectionLabel from "@/components/ui/SectionLabel";
+import LineReveal from "@/components/ui/LineReveal";
+import MagneticButton from "@/components/ui/MagneticButton";
 
 export default function FAQ() {
+  const [open, setOpen] = useState<number | null>(0);
+  const reduceMotion = useReducedMotion();
+
   return (
-    <section className="bg-black py-20 md:py-28" aria-labelledby="faq-title">
-      <div className="mx-auto max-w-site px-5 md:px-8">
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-          <div>
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-gold">
-              Перед записью
-            </p>
-            <h2 id="faq-title" className="font-display text-[36px] tracking-wide text-white md:text-5xl">
-              ЧАСТЫЕ ВОПРОСЫ
-            </h2>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
-              Если не нашли ответ — спросите напрямую, поможем сориентироваться.
-            </p>
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-ghost mt-7 w-full sm:w-auto">
-              Спросить в WhatsApp
-            </a>
-          </div>
-          <div className="divide-y divide-border border-y border-border">
-            {questions.map((item) => (
-              <details key={item.question} className="group py-5">
-                <summary className="flex min-h-10 cursor-pointer list-none items-center justify-between gap-5 text-left text-[15px] font-medium text-white marker:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold">
-                  {item.question}
-                  <span aria-hidden className="shrink-0 text-xl font-light text-gold transition-transform group-open:rotate-45">+</span>
-                </summary>
-                <p className="max-w-xl pt-3 text-sm leading-[1.75] text-muted">{item.answer}</p>
-              </details>
-            ))}
+    <section id="faq" aria-labelledby="faq-title" className="relative bg-bg py-24 md:py-36">
+      <div className="container-site grid gap-12 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <div className="lg:sticky lg:top-28">
+            <SectionLabel index="08">Вопросы</SectionLabel>
+            <LineReveal id="faq-title" lines={["Частые", "вопросы"]} className="display-lg mt-6 text-fg" />
+            <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-muted">Не нашли ответ? Спросите напрямую — ответим в мессенджере.</p>
+            <div className="mt-8">
+              <MagneticButton href={WHATSAPP_URL} external variant="ghost">
+                Спросить в WhatsApp
+              </MagneticButton>
+            </div>
           </div>
         </div>
+
+        <ul className="border-b border-line lg:col-span-7">
+          {faqs.map((faq, i) => {
+            const isOpen = open === i;
+            return (
+              <li key={faq.question} className={`border-t border-line transition-colors duration-500 ${isOpen ? "bg-surface" : ""}`}>
+                <h3>
+                  <button
+                    type="button"
+                    id={`faq-q-${i}`}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-a-${i}`}
+                    onClick={() => setOpen(isOpen ? null : i)}
+                    className="group flex w-full items-center gap-5 px-1 py-7 text-left md:gap-8 md:px-6 md:py-8"
+                  >
+                    <span className="meta tabular-nums">0{i + 1}</span>
+                    <span className={`flex-1 text-lg font-medium leading-snug transition-colors duration-300 md:text-2xl ${isOpen ? "text-fg" : "text-fg/70 group-hover:text-fg"}`}>
+                      {faq.question}
+                    </span>
+                    <span className="relative flex h-10 w-10 shrink-0 items-center justify-center border border-line" aria-hidden>
+                      <span className="absolute h-px w-3.5 bg-fg" />
+                      <span className={`absolute h-3.5 w-px bg-fg transition-transform duration-500 ease-expo ${isOpen ? "scale-y-0" : ""}`} />
+                    </span>
+                  </button>
+                </h3>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      id={`faq-a-${i}`}
+                      role="region"
+                      aria-labelledby={`faq-q-${i}`}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: reduceMotion ? 0 : 0.6, ease: EASE_EXPO }}
+                      className="overflow-hidden"
+                    >
+                      <p className="max-w-xl px-1 pb-8 pl-[3.25rem] text-[15px] leading-relaxed text-muted md:px-6 md:pl-[5.5rem]">{faq.answer}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

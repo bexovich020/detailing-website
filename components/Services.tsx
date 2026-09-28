@@ -1,136 +1,158 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
-import {
-  Crown,
-  Layers,
-  Shield,
-  Sparkles,
-  Sun,
-  Wind,
-  type LucideIcon,
-} from "lucide-react";
-import { media } from "@/lib/media";
-
-type Service = {
-  title: string;
-  description: string;
-  icon: LucideIcon;
-  image: (typeof media.services)[keyof typeof media.services];
-};
-
-const services: Service[] = [
-  {
-    title: "Керамическое покрытие",
-    description:
-      "Защитное покрытие для кузова с выразительным блеском и водоотталкивающим эффектом.",
-    icon: Shield,
-    image: media.services.ceramic,
-  },
-  {
-    title: "Полировка кузова",
-    description:
-      "Коррекция внешнего вида лакокрасочного покрытия и восстановление блеска кузова.",
-    icon: Sparkles,
-    image: media.services.polish,
-  },
-  {
-    title: "Химчистка салона",
-    description:
-      "Деликатный уход за интерьером и основными поверхностями салона автомобиля.",
-    icon: Wind,
-    image: media.services.interior,
-  },
-  {
-    title: "Тонировка стёкол",
-    description:
-      "Тонировка стёкол с подбором решения под автомобиль и ваши пожелания.",
-    icon: Sun,
-    image: media.services.tint,
-  },
-  {
-    title: "Бронирование плёнкой",
-    description:
-      "Защитная плёнка для кузова. Можно обсудить отдельные элементы или весь автомобиль.",
-    icon: Layers,
-    image: media.services.ppf,
-  },
-  {
-    title: "Детейлинг под ключ",
-    description:
-      "Комплексный уход за кузовом и салоном с набором работ под состояние автомобиля.",
-    icon: Crown,
-    image: media.services.full,
-  },
-];
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, Plus } from "lucide-react";
+import { quoteUrl, services } from "@/lib/content";
+import { EASE_EXPO, EASE_IN_OUT, useFinePointer } from "@/lib/motion";
+import SectionLabel from "@/components/ui/SectionLabel";
+import LineReveal from "@/components/ui/LineReveal";
 
 export default function Services() {
+  const [active, setActive] = useState(0);
+  const fine = useFinePointer();
   const reduceMotion = useReducedMotion();
+  const current = services[active];
 
   return (
-    <section id="services" className="bg-black py-20 text-white md:py-28">
-      <div className="mx-auto max-w-site px-5 md:px-8">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.55 }}
-          className="mb-12 text-left md:mb-16"
-        >
-          <h2 className="font-display text-[36px] tracking-wide text-white md:text-5xl">
-            НАШИ УСЛУГИ
-          </h2>
-          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted">
-            Выберите услугу или напишите нам — обсудим состояние автомобиля и подходящий объём работ.
-          </p>
-          <div className="section-divider mt-7 max-w-[140px]" />
-        </motion.div>
+    <section id="services" aria-labelledby="services-title" className="relative bg-bg py-24 md:py-36">
+      <div className="container-site grid gap-12 lg:grid-cols-12 lg:gap-10">
+        <div className="lg:col-span-5">
+          <div className="lg:sticky lg:top-28">
+            <SectionLabel index="02">Услуги</SectionLabel>
+            <LineReveal
+              id="services-title"
+              lines={["Что мы", "делаем"]}
+              className="display-lg mt-6 text-fg"
+            />
+            <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-muted">
+              Шесть направлений ухода за кузовом, стёклами и салоном. Объём работ согласуем после осмотра.
+            </p>
 
-        <div className="grid grid-cols-1 gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, i) => {
-            const Icon = service.icon;
-            return (
-              <motion.article
-                key={service.title}
-                initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{
-                  duration: 0.5,
-                  delay: reduceMotion ? 0 : i * 0.1,
-                }}
-                className="group flex flex-col bg-card ring-1 ring-inset ring-white/[0.06] transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/30 hover:ring-gold/50"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden">
+            <div className="relative mt-10 hidden aspect-[4/5] max-h-[52vh] w-full overflow-hidden bg-surface lg:block">
+              <AnimatePresence initial={false} mode="popLayout">
+                <motion.div
+                  key={current.id}
+                  initial={reduceMotion ? { opacity: 0 } : { clipPath: "inset(100% 0 0 0)", scale: 1.1 }}
+                  animate={reduceMotion ? { opacity: 1 } : { clipPath: "inset(0% 0 0 0)", scale: 1 }}
+                  exit={{ opacity: 1 }}
+                  transition={{ duration: 0.9, ease: EASE_IN_OUT }}
+                  className="absolute inset-0"
+                >
                   <Image
-                    src={service.image.src}
-                    alt={service.image.alt}
+                    src={current.image.src}
+                    alt={current.image.alt}
                     fill
-                    className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100 ${service.image.position}`}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    sizes="(min-width: 1024px) 38vw, 0px"
+                    className={`object-cover grayscale-[35%] ${current.image.position}`}
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-transparent to-transparent" />
+                </motion.div>
+              </AnimatePresence>
+              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6">
+                <div className="overflow-hidden">
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.p
+                      key={current.number}
+                      initial={{ y: "100%" }}
+                      animate={{ y: 0 }}
+                      exit={{ y: "-100%" }}
+                      transition={{ duration: 0.5, ease: EASE_EXPO }}
+                      className="font-display text-7xl font-medium leading-none text-fg tabular-nums"
+                    >
+                      {current.number}
+                    </motion.p>
+                  </AnimatePresence>
                 </div>
-                <div className="flex flex-1 flex-col p-6 md:p-8">
-                  <Icon
-                    className="mb-4 h-5 w-5 text-gold"
-                    strokeWidth={1.4}
-                    aria-hidden
-                  />
-                  <h3 className="font-display text-[22px] tracking-wide text-white">
-                    {service.title}
-                  </h3>
-                  <p className="mt-3 flex-1 text-sm leading-[1.7] text-muted">
-                    {service.description}
-                  </p>
-                  <a href="#contact" className="mt-7 inline-flex min-h-11 items-center text-sm font-semibold text-gold transition-colors hover:text-white focus-visible:text-white">
-                    Узнать стоимость <span className="ml-2" aria-hidden>→</span>
-                  </a>
+                <p className="meta text-fg/80">{current.category}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ul className="border-b border-line lg:col-span-7 lg:pt-2">
+          {services.map((service, i) => {
+            const isActive = active === i;
+            return (
+              <li
+                key={service.id}
+                className="border-t border-line"
+                onPointerEnter={(e) => e.pointerType === "mouse" && setActive(i)}
+              >
+                <h3>
+                  <button
+                    type="button"
+                    aria-expanded={isActive}
+                    aria-controls={`service-panel-${service.id}`}
+                    onClick={() => setActive(isActive && !fine ? -1 : i)}
+                    onFocus={() => fine && setActive(i)}
+                    className="group flex w-full items-center gap-5 py-6 text-left md:gap-8 md:py-8"
+                  >
+                    <span className={`meta w-8 shrink-0 tabular-nums transition-colors duration-500 ${isActive ? "text-accent" : ""}`}>
+                      {service.number}
+                    </span>
+                    <span
+                      className={`flex-1 font-display text-[clamp(1.6rem,3.6vw,3.25rem)] font-medium uppercase leading-none transition-[color,transform] duration-700 ease-expo ${
+                        isActive ? "translate-x-2 text-fg md:translate-x-4" : "text-fg/45 group-hover:text-fg/80"
+                      }`}
+                    >
+                      {service.title}
+                    </span>
+                    <span
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center border transition-all duration-500 ease-expo ${
+                        isActive ? "rotate-45 border-accent bg-accent text-bg" : "border-line text-fg/60"
+                      }`}
+                      aria-hidden
+                    >
+                      <Plus className="h-4 w-4" strokeWidth={1.5} />
+                    </span>
+                  </button>
+                </h3>
+
+                <div
+                  id={`service-panel-${service.id}`}
+                  role="region"
+                  aria-label={service.title}
+                  className={`grid transition-[grid-template-rows] duration-700 ease-expo ${isActive ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                >
+                  <div className="overflow-hidden">
+                    <div
+                      className={`pb-8 pl-[3.25rem] pr-2 transition-opacity duration-500 md:pl-16 ${isActive ? "opacity-100 delay-150" : "opacity-0"}`}
+                    >
+                      <div className="relative mb-6 aspect-[16/10] overflow-hidden bg-surface lg:hidden">
+                        <Image
+                          src={service.image.src}
+                          alt={service.image.alt}
+                          fill
+                          sizes="(max-width: 1023px) 90vw, 0px"
+                          className={`object-cover ${service.image.position}`}
+                        />
+                      </div>
+                      <p className="max-w-md text-[15px] leading-relaxed text-fg/70">{service.description}</p>
+                      <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3">
+                        <span className="meta">Стоимость — после осмотра</span>
+                        <a
+                          href={quoteUrl(service.title)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group/link inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.16em] text-accent"
+                        >
+                          Узнать стоимость
+                          <ArrowUpRight
+                            className="h-4 w-4 transition-transform duration-500 ease-expo group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
+                            strokeWidth={1.6}
+                            aria-hidden
+                          />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </motion.article>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
     </section>
   );

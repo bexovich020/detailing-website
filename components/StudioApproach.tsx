@@ -1,55 +1,52 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { WHATSAPP_URL } from "@/lib/contact-links";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { principles } from "@/lib/content";
+import SectionLabel from "@/components/ui/SectionLabel";
 
-const points = [
-  { number: "01", title: "Под вашу задачу", text: "Сначала обсуждаем, что важно именно для вас и вашего автомобиля." },
-  { number: "02", title: "Понятный план", text: "Согласовываем состав работ до того, как приступим к уходу." },
-  { number: "03", title: "Внимание к деталям", text: "Работаем с кузовом и интерьером, учитывая их состояние." },
-];
-
-export default function StudioApproach() {
+function Principle({ item }: { item: (typeof principles)[number] }) {
+  const ref = useRef<HTMLLIElement>(null);
   const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 85%", "start 35%"] });
+  const opacity = useTransform(scrollYProgress, [0, 1], [reduceMotion ? 1 : 0.14, 1]);
+  const x = useTransform(scrollYProgress, [0, 1], [reduceMotion ? 0 : 60, 0]);
+  const line = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <section className="bg-graphite py-20 md:py-28">
-      <div className="mx-auto max-w-site px-5 md:px-8">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.55 }}
-          className="mb-12 text-left md:mb-16"
-        >
-          <h2 className="font-display text-[40px] tracking-wide text-white md:text-5xl">
-            ВНИМАНИЕ К ДЕТАЛЯМ
-          </h2>
-          <div className="section-divider mt-7 max-w-[140px]" />
-        </motion.div>
+    <li ref={ref} className="relative grid gap-4 py-10 md:grid-cols-12 md:items-end md:gap-8 md:py-14">
+      <motion.span style={{ scaleX: line }} className="absolute inset-x-0 top-0 h-px origin-left bg-line" aria-hidden />
+      <span className="meta tabular-nums text-accent md:col-span-1">{item.number}</span>
+      <motion.h3
+        style={{ opacity, x }}
+        className="font-display text-[clamp(2.6rem,8vw,8.5rem)] font-medium uppercase leading-[0.88] text-fg md:col-span-8"
+      >
+        {item.title}
+      </motion.h3>
+      <motion.p style={{ opacity }} className="max-w-xs text-[15px] leading-relaxed text-muted md:col-span-3 md:pb-3">
+        {item.text}
+      </motion.p>
+    </li>
+  );
+}
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-10">
-          {points.map((point, i) => (
-            <motion.article
-              key={point.number}
-              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{
-                duration: 0.5,
-                delay: reduceMotion ? 0 : i * 0.1,
-              }}
-              className="relative flex flex-col border-t border-border pt-6 text-left"
-            >
-              <span className="font-display text-sm tracking-[0.2em] text-gold">{point.number}</span>
-              <h3 className="mt-4 font-display text-2xl tracking-wide text-white">{point.title}</h3>
-              <p className="mt-3 text-[15px] leading-[1.75] text-white/70">{point.text}</p>
-            </motion.article>
-          ))}
+export default function StudioApproach() {
+  return (
+    <section id="approach" aria-labelledby="approach-title" className="relative overflow-hidden bg-bg py-24 md:py-36">
+      <div className="container-site">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <SectionLabel index="06">Подход</SectionLabel>
+            <h2 id="approach-title" className="mt-6 max-w-2xl text-2xl leading-snug text-fg md:text-4xl">
+              Без шаблонных пакетов. Сначала задача и состояние автомобиля, потом — план работ.
+            </h2>
+          </div>
         </div>
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-ghost mt-10 w-full sm:w-auto">
-          Обсудить задачу в WhatsApp <span className="ml-2" aria-hidden>→</span>
-        </a>
+        <ul className="mt-16 border-b border-line md:mt-24">
+          {principles.map((item) => (
+            <Principle key={item.number} item={item} />
+          ))}
+        </ul>
       </div>
     </section>
   );

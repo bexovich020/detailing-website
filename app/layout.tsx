@@ -1,17 +1,17 @@
-import type { Metadata } from "next";
-import { Bebas_Neue, Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Oswald, Manrope } from "next/font/google";
 import "./globals.css";
 
-const bebas = Bebas_Neue({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-bebas",
+const display = Oswald({
+  subsets: ["latin", "cyrillic"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-display",
   display: "swap",
 });
 
-const inter = Inter({
+const sans = Manrope({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-inter",
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -34,7 +34,12 @@ export const metadata: Metadata = {
     locale: "ru_KZ",
     type: "website",
   },
-  twitter: { card: "summary" },
+  twitter: { card: "summary_large_image" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#07080A",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -43,8 +48,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${bebas.variable} ${inter.variable}`}>
-      <body className="overflow-x-hidden font-sans antialiased">{children}</body>
+    <html lang="ru" className={`${display.variable} ${sans.variable}`}>
+      <body className="overflow-x-hidden font-sans antialiased">
+        {children}
+        <div className="grain animate-grain" aria-hidden />
+      </body>
     </html>
   );
 }

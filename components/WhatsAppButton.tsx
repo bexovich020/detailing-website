@@ -1,49 +1,39 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { MessageCircle, Phone, Send } from "lucide-react";
-import { PHONE_URL, TELEGRAM_URL, WHATSAPP_URL } from "@/lib/contact-links";
+import { useState } from "react";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { MessageCircle } from "lucide-react";
+import { WHATSAPP_URL } from "@/lib/contact-links";
+import { EASE_EXPO } from "@/lib/motion";
 
 export default function WhatsAppButton() {
-  const [visible, setVisible] = useState(false);
-  const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), 2000);
-    return () => clearTimeout(timer);
-  }, []);
+  const [show, setShow] = useState(false);
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (v) => {
+    const pastHero = v > window.innerHeight * 0.8;
+    const nearEnd = v + window.innerHeight > document.documentElement.scrollHeight - window.innerHeight * 1.2;
+    setShow(pastHero && !nearEnd);
+  });
 
   return (
-    <>
-      <nav aria-label="Быстрая связь" className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 gap-2 border-t border-white/10 bg-[#0b1012]/95 px-3 pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-2 backdrop-blur-lg lg:hidden">
-        <a href={PHONE_URL} className="flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-full text-[10px] font-medium text-white/75 transition-colors hover:bg-white/5 hover:text-white">
-          <Phone size={17} aria-hidden /> Позвонить
-        </a>
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-full bg-[#a9cbc6] text-[10px] font-semibold text-[#0b1012] transition-colors hover:bg-[#c0d9d5]">
-          <MessageCircle size={17} aria-hidden /> WhatsApp
-        </a>
-        <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className="flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-full text-[10px] font-medium text-white/75 transition-colors hover:bg-white/5 hover:text-white">
-          <Send size={17} aria-hidden /> Telegram
-        </a>
-      </nav>
-      <AnimatePresence>
-      {visible && (
+    <AnimatePresence>
+      {show && (
         <motion.a
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Написать в WhatsApp"
-          initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+          data-cursor="hide"
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
-          className="fixed bottom-6 right-6 z-40 hidden h-14 w-14 items-center justify-center rounded-full bg-[#a9cbc6] text-[#0b1012] shadow-[0_6px_18px_rgba(0,0,0,0.35)] transition-colors hover:bg-[#c0d9d5] lg:flex"
+          exit={{ opacity: 0, y: 24 }}
+          transition={{ duration: 0.6, ease: EASE_EXPO }}
+          className="group fixed bottom-[max(env(safe-area-inset-bottom),1rem)] right-4 z-50 flex h-14 items-center gap-3 overflow-hidden bg-accent pl-5 pr-5 text-bg shadow-[0_10px_40px_-10px_rgba(255,75,31,0.6)] md:bottom-8 md:right-8"
         >
-          <MessageCircle size={22} strokeWidth={1.6} />
+          <MessageCircle className="h-5 w-5" strokeWidth={1.8} aria-hidden />
+          <span className="text-[12px] font-semibold uppercase tracking-[0.14em]">WhatsApp</span>
         </motion.a>
       )}
     </AnimatePresence>
-    </>
   );
 }

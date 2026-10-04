@@ -14,8 +14,8 @@ export default function FAQ() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="faq" aria-labelledby="faq-title" className="relative bg-bg py-24 md:py-36">
-      <div className="container-site grid gap-12 lg:grid-cols-12">
+    <section id="faq" aria-labelledby="faq-title" className="relative bg-bg py-16 md:py-24">
+      <div className="container-site grid gap-8 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-28">
             <SectionLabel index="08">Вопросы</SectionLabel>
@@ -41,7 +41,7 @@ export default function FAQ() {
                     aria-expanded={isOpen}
                     aria-controls={`faq-a-${i}`}
                     onClick={() => setOpen(isOpen ? null : i)}
-                    className="group flex w-full items-center gap-5 px-1 py-7 text-left md:gap-8 md:px-6 md:py-8"
+                    className="group flex w-full items-center gap-5 px-1 py-5 text-left md:gap-8 md:px-6 md:py-6"
                   >
                     <span className="meta tabular-nums">0{i + 1}</span>
                     <span className={`flex-1 text-lg font-medium leading-snug transition-colors duration-300 md:text-2xl ${isOpen ? "text-fg" : "text-fg/70 group-hover:text-fg"}`}>
@@ -65,7 +65,7 @@ export default function FAQ() {
                       transition={{ duration: reduceMotion ? 0 : 0.6, ease: EASE_EXPO }}
                       className="overflow-hidden"
                     >
-                      <p className="max-w-xl px-1 pb-8 pl-[3.25rem] text-[15px] leading-relaxed text-muted md:px-6 md:pl-[5.5rem]">{faq.answer}</p>
+                      <p className="max-w-xl px-1 pb-6 pl-[3.25rem] text-[15px] leading-relaxed text-muted md:px-6 md:pl-[5.5rem]">{faq.answer}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>

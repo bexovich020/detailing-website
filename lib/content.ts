@@ -8,6 +8,7 @@ export type Service = {
   number: string;
   title: string;
   category: ServiceCategory;
+  startingPrice: string;
   description: string;
   image: { src: string; alt: string; position: string };
 };
@@ -18,6 +19,7 @@ export const services: Service[] = [
     number: "01",
     title: "Керамическое покрытие",
     category: "Кузов",
+    startingPrice: "от 120 000 ₸",
     description:
       "Защитное покрытие для кузова с выразительным блеском и водоотталкивающим эффектом.",
     image: media.services.ceramic,
@@ -27,6 +29,7 @@ export const services: Service[] = [
     number: "02",
     title: "Полировка кузова",
     category: "Кузов",
+    startingPrice: "от 60 000 ₸",
     description:
       "Коррекция внешнего вида лакокрасочного покрытия и восстановление блеска кузова.",
     image: media.services.polish,
@@ -36,6 +39,7 @@ export const services: Service[] = [
     number: "03",
     title: "Химчистка салона",
     category: "Салон",
+    startingPrice: "от 45 000 ₸",
     description:
       "Деликатный уход за интерьером и основными поверхностями салона автомобиля.",
     image: media.services.interior,
@@ -45,6 +49,7 @@ export const services: Service[] = [
     number: "04",
     title: "Тонировка стёкол",
     category: "Стёкла",
+    startingPrice: "от 35 000 ₸",
     description:
       "Тонировка стёкол с подбором решения под автомобиль и ваши пожелания.",
     image: media.services.tint,
@@ -54,6 +59,7 @@ export const services: Service[] = [
     number: "05",
     title: "Бронирование плёнкой",
     category: "Кузов",
+    startingPrice: "от 35 000 ₸ за элемент",
     description:
       "Защитная плёнка для кузова. Можно обсудить отдельные элементы или весь автомобиль.",
     image: media.services.ppf,
@@ -63,6 +69,7 @@ export const services: Service[] = [
     number: "06",
     title: "Детейлинг под ключ",
     category: "Комплекс",
+    startingPrice: "от 120 000 ₸",
     description:
       "Комплексный уход за кузовом и салоном с набором работ под состояние автомобиля.",
     image: media.services.full,

@@ -34,18 +34,18 @@ export default function ContactOptions() {
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-bg via-bg/80 to-bg/20" />
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-bg via-transparent to-bg" />
 
-      <div className="container-site flex min-h-[100svh] flex-col justify-center py-28">
+      <div className="container-site flex flex-col justify-center py-16 md:py-24">
         <SectionLabel index="09">Запись</SectionLabel>
         <LineReveal
           id="contact-title"
           lines={["Готовы вернуть", "автомобилю", "идеальный вид?"]}
           className="display-lg mt-6 max-w-5xl text-fg"
         />
-        <p className="mt-8 max-w-md text-[15px] leading-relaxed text-fg/70 md:text-base">
+        <p className="mt-5 max-w-md text-[15px] leading-relaxed text-fg/70 md:text-base">
           Расскажите, что хотите сделать с автомобилем. Обсудим подходящую услугу, стоимость и свободные даты.
         </p>
 
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <MagneticButton href={WHATSAPP_URL} external variant="accent" icon={<MessageCircle className="h-4 w-4" strokeWidth={1.6} aria-hidden />}>
             Написать в WhatsApp
           </MagneticButton>
@@ -57,7 +57,7 @@ export default function ContactOptions() {
           </MagneticButton>
         </div>
 
-        <dl className="mt-20 grid max-w-4xl grid-cols-1 gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
+        <dl className="mt-10 grid max-w-4xl grid-cols-1 gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
           {details.map((d) => (
             <div key={d.label} className="bg-bg/70 p-5 backdrop-blur-sm">
               <dt className="meta">{d.label}</dt>

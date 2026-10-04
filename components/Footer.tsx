@@ -12,8 +12,8 @@ export default function Footer() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end end"] });
 
   return (
-    <footer ref={ref} className="relative overflow-hidden border-t border-line bg-bg pt-16 md:pt-24">
-      <div className="container-site grid gap-12 md:grid-cols-12">
+    <footer ref={ref} className="relative overflow-hidden border-t border-line bg-bg pt-12 md:pt-16">
+      <div className="container-site grid gap-10 md:grid-cols-12">
         <div className="md:col-span-5">
           <p className="max-w-xs text-[15px] leading-relaxed text-muted">
             Автодетейлинг в Алматы: полировка, керамика, химчистка, тонировка и защитная плёнка.
@@ -56,7 +56,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="container-site mt-16 flex flex-col justify-between gap-2 border-t border-line py-6 text-[12px] text-muted sm:flex-row">
+      <div className="container-site mt-10 flex flex-col justify-between gap-2 border-t border-line py-5 text-[12px] text-muted sm:flex-row">
         <p>© {new Date().getFullYear()} APEX DETAIL</p>
         <p>Алматы, Казахстан</p>
       </div>

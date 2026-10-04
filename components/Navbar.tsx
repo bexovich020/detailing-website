@@ -142,7 +142,6 @@ export default function Navbar() {
                       <span className="font-display text-[clamp(2.2rem,10vw,3.5rem)] font-medium uppercase leading-none text-fg">
                         {link.label}
                       </span>
-                      <span className="meta tabular-nums">0{i + 1}</span>
                     </motion.a>
                   </li>
                 ))}

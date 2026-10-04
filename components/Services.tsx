@@ -10,14 +10,16 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import LineReveal from "@/components/ui/LineReveal";
 
 export default function Services() {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState<number | null>(0);
   const fine = useFinePointer();
   const reduceMotion = useReducedMotion();
-  const current = services[active];
+  // A closed accordion has no active index. Keep rendering safe if the list changes
+  // or an event ever supplies an out-of-range index.
+  const current = active === null ? null : services[active] ?? null;
 
   return (
-    <section id="services" aria-labelledby="services-title" className="relative bg-bg py-24 md:py-36">
-      <div className="container-site grid gap-12 lg:grid-cols-12 lg:gap-10">
+    <section id="services" aria-labelledby="services-title" className="relative bg-bg py-16 md:py-24">
+      <div className="container-site grid gap-8 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-28">
             <SectionLabel index="02">Услуги</SectionLabel>
@@ -30,43 +32,47 @@ export default function Services() {
               Шесть направлений ухода за кузовом, стёклами и салоном. Объём работ согласуем после осмотра.
             </p>
 
-            <div className="relative mt-10 hidden aspect-[4/5] max-h-[52vh] w-full overflow-hidden bg-surface lg:block">
-              <AnimatePresence initial={false} mode="popLayout">
-                <motion.div
-                  key={current.id}
-                  initial={reduceMotion ? { opacity: 0 } : { clipPath: "inset(100% 0 0 0)", scale: 1.1 }}
-                  animate={reduceMotion ? { opacity: 1 } : { clipPath: "inset(0% 0 0 0)", scale: 1 }}
-                  exit={{ opacity: 1 }}
-                  transition={{ duration: 0.9, ease: EASE_IN_OUT }}
-                  className="absolute inset-0"
-                >
-                  <Image
-                    src={current.image.src}
-                    alt={current.image.alt}
-                    fill
-                    sizes="(min-width: 1024px) 38vw, 0px"
-                    className={`object-cover grayscale-[35%] ${current.image.position}`}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-transparent to-transparent" />
-                </motion.div>
-              </AnimatePresence>
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6">
-                <div className="overflow-hidden">
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.p
-                      key={current.number}
-                      initial={{ y: "100%" }}
-                      animate={{ y: 0 }}
-                      exit={{ y: "-100%" }}
-                      transition={{ duration: 0.5, ease: EASE_EXPO }}
-                      className="font-display text-7xl font-medium leading-none text-fg tabular-nums"
+            <div className="relative mt-8 hidden aspect-[4/5] max-h-[52vh] w-full overflow-hidden bg-surface lg:block">
+              {current && (
+                <>
+                  <AnimatePresence initial={false} mode="popLayout">
+                    <motion.div
+                      key={current.id}
+                      initial={reduceMotion ? { opacity: 0 } : { clipPath: "inset(100% 0 0 0)", scale: 1.1 }}
+                      animate={reduceMotion ? { opacity: 1 } : { clipPath: "inset(0% 0 0 0)", scale: 1 }}
+                      exit={{ opacity: 1 }}
+                      transition={{ duration: 0.9, ease: EASE_IN_OUT }}
+                      className="absolute inset-0"
                     >
-                      {current.number}
-                    </motion.p>
+                      <Image
+                        src={current.image.src}
+                        alt={current.image.alt}
+                        fill
+                        sizes="(min-width: 1024px) 38vw, 0px"
+                        className={`object-cover grayscale-[35%] ${current.image.position}`}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-transparent to-transparent" />
+                    </motion.div>
                   </AnimatePresence>
-                </div>
-                <p className="meta text-fg/80">{current.category}</p>
-              </div>
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6">
+                    <div className="overflow-hidden">
+                      <AnimatePresence mode="wait" initial={false}>
+                        <motion.p
+                          key={current.number}
+                          initial={{ y: "100%" }}
+                          animate={{ y: 0 }}
+                          exit={{ y: "-100%" }}
+                          transition={{ duration: 0.5, ease: EASE_EXPO }}
+                          className="font-display text-7xl font-medium leading-none text-fg tabular-nums"
+                        >
+                          {current.number}
+                        </motion.p>
+                      </AnimatePresence>
+                    </div>
+                    <p className="meta text-fg/80">{current.category}</p>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -85,7 +91,13 @@ export default function Services() {
                     type="button"
                     aria-expanded={isActive}
                     aria-controls={`service-panel-${service.id}`}
-                    onClick={() => setActive(isActive && !fine ? -1 : i)}
+                    onClick={() => {
+                      if (fine) {
+                        setActive(i);
+                        return;
+                      }
+                      setActive((currentActive) => (currentActive === i ? null : i));
+                    }}
                     onFocus={() => fine && setActive(i)}
                     className="group flex w-full items-center gap-5 py-6 text-left md:gap-8 md:py-8"
                   >
@@ -131,7 +143,7 @@ export default function Services() {
                       </div>
                       <p className="max-w-md text-[15px] leading-relaxed text-fg/70">{service.description}</p>
                       <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3">
-                        <span className="meta">Стоимость — после осмотра</span>
+                        <span className="meta">{service.startingPrice} · итог после осмотра</span>
                         <a
                           href={quoteUrl(service.title)}
                           target="_blank"

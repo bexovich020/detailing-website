@@ -71,9 +71,9 @@ export default function BeforeAfter() {
   };
 
   return (
-    <section id="result" aria-labelledby="result-title" className="relative bg-surface py-24 md:py-36">
+    <section id="result" aria-labelledby="result-title" className="relative bg-surface py-16 md:py-24">
       <div className="container-site">
-        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
             <SectionLabel index="03">До / После</SectionLabel>
             <LineReveal id="result-title" lines={["Разница", "в отражении"]} className="display-lg mt-6 text-fg" />
@@ -84,7 +84,7 @@ export default function BeforeAfter() {
         </div>
       </div>
 
-      <div className="container-site mt-12 md:mt-16">
+      <div className="container-site mt-8 md:mt-10">
         <div
           ref={frameRef}
           data-cursor="Тянуть"
@@ -145,9 +145,6 @@ export default function BeforeAfter() {
             </div>
           </motion.div>
         </div>
-        <p className="meta mt-4 normal-case tracking-[0.08em]">
-          Иллюстрация эффекта полировки. Не фотография работ студии.
-        </p>
       </div>
     </section>
   );

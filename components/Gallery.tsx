@@ -10,18 +10,15 @@ export default function Gallery() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="gallery" aria-labelledby="gallery-title" className="relative bg-surface py-20 sm:py-24 md:py-32">
+    <section id="gallery" aria-labelledby="gallery-title" className="relative bg-surface py-16 sm:py-20 md:py-24">
       <div className="container-site">
-        <div className="mb-10 grid gap-5 sm:mb-12 sm:grid-cols-[1fr_auto] sm:items-end md:mb-14">
+        <div className="mb-8 sm:mb-10">
           <div>
             <SectionLabel index="05">Галерея</SectionLabel>
             <h2 id="gallery-title" className="display-lg mt-6 max-w-[10ch] text-fg max-[1023px]:text-[clamp(2.75rem,10vw,5rem)]">
               Детали, которые <span className="text-outline">видно</span>
             </h2>
           </div>
-          <p className="max-w-xs text-[13px] leading-relaxed text-muted sm:pb-1">
-            Иллюстративные фотографии процессов и материалов. Это не портфолио работ студии.
-          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-5">
@@ -58,7 +55,7 @@ export default function Gallery() {
           ))}
         </div>
 
-        <div className="mt-8 flex flex-col items-start gap-4 border-t border-line pt-6 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-6 sm:pt-7">
+        <div className="mt-6 flex flex-col items-start gap-4 border-t border-line pt-5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-6 sm:pt-6">
           <p className="font-display text-2xl font-medium uppercase leading-[1.12] text-fg sm:text-3xl">
             Покажите свой автомобиль
           </p>

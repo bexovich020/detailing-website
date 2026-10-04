@@ -61,9 +61,9 @@ export default function Hero() {
 
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="container-site relative flex flex-1 flex-col justify-end pb-28 pt-28 md:pb-32"
+        className="container-site relative flex flex-1 flex-col justify-end pb-20 pt-24 md:pb-24 md:pt-28"
       >
-        <motion.p {...fade(0)} className="meta mb-6 flex items-center gap-3 md:mb-8">
+        <motion.p {...fade(0)} className="meta mb-4 flex items-center gap-3 md:mb-6">
           <span className="h-1.5 w-1.5 bg-accent" aria-hidden />
           Премиальный автодетейлинг · Алматы
         </motion.p>
@@ -79,7 +79,7 @@ export default function Hero() {
           lineClassName="[&:nth-child(1)]:text-fg"
         />
 
-        <div className="mt-8 flex flex-col gap-8 md:mt-10 md:flex-row md:items-end md:justify-between">
+        <div className="mt-6 flex flex-col gap-6 md:mt-8 md:flex-row md:items-end md:justify-between">
           <motion.p {...fade(0.45)} className="max-w-md text-[15px] leading-relaxed text-fg/70 md:text-base">
             Полировка, химчистка, керамика и защитная плёнка. Обсудим состояние автомобиля и подскажем, с чего начать.
           </motion.p>

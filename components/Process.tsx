@@ -29,7 +29,7 @@ function DesktopProcess() {
             <SectionLabel index="04">Процесс</SectionLabel>
             <LineReveal id="process-title" lines={["Как мы", "работаем"]} className="display-lg mt-6 text-fg" />
 
-            <ol className="mt-14 flex flex-col" aria-label="Этапы работы">
+            <ol className="mt-10 flex flex-col" aria-label="Этапы работы">
               {steps.map((s, i) => (
                 <li key={s.number} aria-current={i === active ? "step" : undefined} className="relative border-t border-line py-5 pl-8">
                   <span
@@ -103,10 +103,10 @@ function MobileProcess() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 70%", "end 60%"] });
 
   return (
-    <div className="container-site py-24 lg:hidden">
+    <div className="container-site py-16 lg:hidden">
       <SectionLabel index="04">Процесс</SectionLabel>
       <LineReveal lines={["Как мы", "работаем"]} className="display-lg mt-6 text-fg" />
-      <ol ref={ref} className="relative mt-12 flex flex-col gap-14 pl-8">
+      <ol ref={ref} className="relative mt-8 flex flex-col gap-10 pl-8">
         <span className="absolute bottom-0 left-[3px] top-0 w-px bg-fg/10" aria-hidden />
         <motion.span
           style={{ scaleY: scrollYProgress }}

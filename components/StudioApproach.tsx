@@ -14,7 +14,7 @@ function Principle({ item }: { item: (typeof principles)[number] }) {
   const line = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <li ref={ref} className="relative grid gap-3 py-8 sm:gap-4 sm:py-9 md:grid-cols-12 md:items-center md:gap-8 md:py-11">
+    <li ref={ref} className="relative grid gap-2 py-6 sm:gap-3 sm:py-7 md:grid-cols-12 md:items-center md:gap-8 md:py-8">
       <motion.span style={{ scaleX: line }} className="absolute inset-x-0 top-0 h-px origin-left bg-line" aria-hidden />
       <span className="meta tabular-nums text-accent md:col-span-1">{item.number}</span>
       <motion.h3
@@ -32,7 +32,7 @@ function Principle({ item }: { item: (typeof principles)[number] }) {
 
 export default function StudioApproach() {
   return (
-    <section id="approach" aria-labelledby="approach-title" className="relative overflow-hidden bg-bg py-24 md:py-36">
+    <section id="approach" aria-labelledby="approach-title" className="relative overflow-hidden bg-bg py-16 md:py-24">
       <div className="container-site">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
@@ -42,7 +42,7 @@ export default function StudioApproach() {
             </h2>
           </div>
         </div>
-        <ul className="mt-16 border-b border-line md:mt-24">
+        <ul className="mt-8 border-b border-line md:mt-12">
           {principles.map((item) => (
             <Principle key={item.number} item={item} />
           ))}

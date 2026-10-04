@@ -9,7 +9,7 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import LineReveal from "@/components/ui/LineReveal";
 
 type Filter = "Все" | ServiceCategory;
-const filters: Filter[] = ["Все", ...serviceCategories];
+const filters: Filter[] = ["Все", ...serviceCategories.filter((category) => category !== "Комплекс")];
 
 export default function Pricing() {
   const [filter, setFilter] = useState<Filter>("Все");
@@ -17,18 +17,18 @@ export default function Pricing() {
   const visible = filter === "Все" ? services : services.filter((s) => s.category === filter);
 
   return (
-    <section id="pricing" aria-labelledby="pricing-title" className="relative bg-surface py-24 md:py-36">
+    <section id="pricing" aria-labelledby="pricing-title" className="relative bg-surface py-16 md:py-24">
       <div className="container-site">
-        <div className="grid gap-10 lg:grid-cols-12">
+        <div className="grid min-w-0 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <SectionLabel index="07">Стоимость</SectionLabel>
             <LineReveal id="pricing-title" lines={["Расчёт под", "автомобиль"]} className="display-lg mt-6 text-fg" />
           </div>
-          <div className="flex flex-col justify-end gap-8 lg:col-span-6 lg:col-start-7">
+          <div className="flex min-w-0 flex-col justify-end gap-5 lg:col-span-6 lg:col-start-7">
             <p className="max-w-md text-[15px] leading-relaxed text-muted">
-              Стоимость зависит от выбранной услуги и состояния автомобиля. Напишите — уточним задачу и сориентируем по цене до записи.
+              Цены указаны как ориентир. Итог зависит от состояния автомобиля и объёма работ — уточним после осмотра.
             </p>
-            <div role="group" aria-label="Фильтр по категории" className="no-scrollbar -mx-5 flex gap-1 overflow-x-auto px-5 sm:mx-0 sm:px-0">
+            <div role="group" aria-label="Фильтр по категории" className="flex flex-wrap gap-1">
               {filters.map((f) => (
                 <button
                   key={f}
@@ -54,7 +54,7 @@ export default function Pricing() {
           </div>
         </div>
 
-        <ul className="mt-14 border-b border-line md:mt-20" aria-live="polite">
+        <ul className="mt-8 border-b border-line md:mt-12" aria-live="polite">
           <AnimatePresence initial={false} mode="popLayout">
             {visible.map((service) => (
               <motion.li
@@ -77,10 +77,10 @@ export default function Pricing() {
                   <span className="meta relative tabular-nums md:col-span-1">{service.number}</span>
                   <span className="relative md:col-span-5">
                     <span className="block font-display text-2xl font-medium uppercase leading-tight text-fg md:text-3xl">{service.title}</span>
-                    <span className="mt-1 block text-[13px] text-muted md:hidden">{service.category}</span>
+                    <span className="mt-1 block text-[13px] text-muted md:hidden">{service.category} · {service.startingPrice}</span>
                   </span>
                   <span className="meta relative hidden md:col-span-2 md:block">{service.category}</span>
-                  <span className="relative hidden text-[14px] text-fg/70 md:col-span-2 md:block">Расчёт индивидуально</span>
+                  <span className="relative hidden text-[14px] text-fg/70 md:col-span-2 md:block">{service.startingPrice}</span>
                   <span className="relative flex items-center justify-end gap-3 md:col-span-2">
                     <span className="hidden text-[12px] font-semibold uppercase tracking-[0.14em] text-fg transition-colors duration-300 group-hover:text-accent sm:inline">
                       Узнать цену

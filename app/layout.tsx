@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Oswald, Manrope } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next"; // добавлено
 import { SITE_URL, studio, studioDescription, studioKeywords } from "@/lib/studio";
 import "./globals.css";
 
@@ -51,6 +52,7 @@ export default function RootLayout({
       <body className="overflow-x-hidden font-sans antialiased">
         {children}
         <div className="grain animate-grain" aria-hidden />
+        <Analytics /> {/* добавлено */}
       </body>
     </html>
   );

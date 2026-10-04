@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { quoteUrl, serviceCategories, services, type ServiceCategory } from "@/lib/content";
+import { quoteUrl, serviceCategories, services, type ServiceCategory } from "@/lib/studio";
 import { EASE_EXPO } from "@/lib/motion";
 import SectionLabel from "@/components/ui/SectionLabel";
 import LineReveal from "@/components/ui/LineReveal";
+import { studio } from "@/lib/studio";
 
 type Filter = "Все" | ServiceCategory;
 const filters: Filter[] = ["Все", ...serviceCategories.filter((category) => category !== "Комплекс")];
@@ -77,13 +78,13 @@ export default function Pricing() {
                   <span className="meta relative tabular-nums md:col-span-1">{service.number}</span>
                   <span className="relative md:col-span-5">
                     <span className="block font-display text-2xl font-medium uppercase leading-tight text-fg md:text-3xl">{service.title}</span>
-                    <span className="mt-1 block text-[13px] text-muted md:hidden">{service.category} · {service.startingPrice}</span>
+                    <span className="mt-1 block text-[13px] text-muted md:hidden">{service.category} · от {service.price}{service.unit === "за элемент" ? ` ${service.unit}` : ""}</span>
                   </span>
                   <span className="meta relative hidden md:col-span-2 md:block">{service.category}</span>
-                  <span className="relative hidden text-[14px] text-fg/70 md:col-span-2 md:block">{service.startingPrice}</span>
+                  <span className="relative hidden text-[14px] text-fg/70 md:col-span-2 md:block">от {service.price}{service.unit === "за элемент" ? ` ${service.unit}` : ""}</span>
                   <span className="relative flex items-center justify-end gap-3 md:col-span-2">
                     <span className="hidden text-[12px] font-semibold uppercase tracking-[0.14em] text-fg transition-colors duration-300 group-hover:text-accent sm:inline">
-                      Узнать цену
+                      {studio.pricingCta}
                     </span>
                     <span className="flex h-10 w-10 items-center justify-center border border-line transition-all duration-500 ease-expo group-hover:border-accent group-hover:bg-accent group-hover:text-bg">
                       <ArrowUpRight className="h-4 w-4" strokeWidth={1.6} aria-hidden />

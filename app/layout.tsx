@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Oswald, Manrope } from "next/font/google";
+import { SITE_URL, studio, studioDescription, studioKeywords } from "@/lib/studio";
 import "./globals.css";
 
 const display = Oswald({
@@ -16,25 +17,23 @@ const sans = Manrope({
 });
 
 export const metadata: Metadata = {
-  ...(process.env.NEXT_PUBLIC_SITE_URL
-    ? { metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL) }
-    : {}),
+  metadataBase: new URL(SITE_URL),
+  alternates: { canonical: "/" },
   title: {
-    default: "APEX DETAIL — автодетейлинг в Алматы",
-    template: "%s | APEX DETAIL",
+    default: `${studio.name} — автодетейлинг в ${studio.city}`,
+    template: `%s | ${studio.name}`,
   },
-  description:
-    "Детейлинг в Алматы: полировка кузова, химчистка салона, керамическое покрытие, тонировка и защита плёнкой. Уточните стоимость и запись в WhatsApp.",
-  keywords:
-    "автодетейлинг алматы, керамика авто, полировка кузова алматы, химчистка авто алматы",
+  description: studioDescription,
+  keywords: studioKeywords,
   openGraph: {
-    title: "APEX DETAIL — автодетейлинг в Алматы",
-    description:
-      "Полировка кузова, химчистка салона и защитные покрытия автомобиля в Алматы. Стоимость и запись — в WhatsApp.",
+    title: `${studio.name} — автодетейлинг в ${studio.city}`,
+    description: studioDescription,
     locale: "ru_KZ",
     type: "website",
+    url: SITE_URL,
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${studio.name} — детейлинг в ${studio.city}` }],
   },
-  twitter: { card: "summary_large_image" },
+  twitter: { card: "summary_large_image", images: ["/opengraph-image"], title: `${studio.name} — автодетейлинг в ${studio.city}`, description: studioDescription },
 };
 
 export const viewport: Viewport = {

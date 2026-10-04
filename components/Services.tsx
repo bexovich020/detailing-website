@@ -4,10 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Plus } from "lucide-react";
-import { quoteUrl, services } from "@/lib/content";
+import { quoteUrl, services } from "@/lib/studio";
 import { EASE_EXPO, EASE_IN_OUT, useFinePointer } from "@/lib/motion";
 import SectionLabel from "@/components/ui/SectionLabel";
 import LineReveal from "@/components/ui/LineReveal";
+import { studio } from "@/lib/studio";
 
 export default function Services() {
   const [active, setActive] = useState<number | null>(0);
@@ -143,14 +144,14 @@ export default function Services() {
                       </div>
                       <p className="max-w-md text-[15px] leading-relaxed text-fg/70">{service.description}</p>
                       <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3">
-                        <span className="meta">{service.startingPrice} · итог после осмотра</span>
+                        <span className="meta">от {service.price} {service.unit} · итог после осмотра</span>
                         <a
                           href={quoteUrl(service.title)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="group/link inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.16em] text-accent"
                         >
-                          Узнать стоимость
+                          {studio.serviceCta}
                           <ArrowUpRight
                             className="h-4 w-4 transition-transform duration-500 ease-expo group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
                             strokeWidth={1.6}

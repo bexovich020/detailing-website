@@ -1,4 +1,7 @@
+import { studio } from "@/lib/studio";
+
 export default function Preloader() {
+  const [firstName, secondName] = studio.name.split(" ");
   return (
     <div
       aria-hidden
@@ -6,7 +9,7 @@ export default function Preloader() {
     >
       <div className="overflow-hidden">
         <p className="preloader-word translate-y-full font-display text-3xl font-medium uppercase tracking-[0.32em] text-fg md:text-4xl">
-          Apex<span className="text-accent">.</span>Detail
+          {firstName}<span className="text-accent">.</span>{secondName}
         </p>
       </div>
       <div className="mt-6 h-px w-40 bg-fg/10">

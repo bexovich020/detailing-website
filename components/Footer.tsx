@@ -5,6 +5,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { ArrowUp } from "lucide-react";
 import { navLinks } from "@/lib/content";
 import { DISPLAY_PHONE, PHONE_URL, TELEGRAM_URL, WHATSAPP_URL } from "@/lib/contact-links";
+import { studio, studioDescription } from "@/lib/studio";
 
 export default function Footer() {
   const ref = useRef<HTMLElement>(null);
@@ -16,7 +17,7 @@ export default function Footer() {
       <div className="container-site grid gap-10 md:grid-cols-12">
         <div className="md:col-span-5">
           <p className="max-w-xs text-[15px] leading-relaxed text-muted">
-            Автодетейлинг в Алматы: полировка, керамика, химчистка, тонировка и защитная плёнка.
+            {studioDescription}
           </p>
         </div>
         <nav aria-label="Навигация в подвале" className="md:col-span-3">
@@ -57,8 +58,8 @@ export default function Footer() {
       </div>
 
       <div className="container-site mt-10 flex flex-col justify-between gap-2 border-t border-line py-5 text-[12px] text-muted sm:flex-row">
-        <p>© {new Date().getFullYear()} APEX DETAIL</p>
-        <p>Алматы, Казахстан</p>
+        <p>© {new Date().getFullYear()} {studio.name}</p>
+        <p>{studio.city}, {studio.country}</p>
       </div>
 
     </footer>

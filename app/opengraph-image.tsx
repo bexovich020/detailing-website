@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
+import { studio } from "@/lib/studio";
 
 export const runtime = "edge";
-export const alt = "APEX DETAIL — детейлинг кузова и салона в Алматы";
+export const alt = `${studio.name} — детейлинг кузова и салона в ${studio.city}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -38,18 +39,20 @@ export default function OpenGraphImage() {
               letterSpacing: 6,
             }}
           >
-            APEX DETAIL
+            {studio.name}
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
           <div
             style={{
+              display: "flex",
+              gap: 8,
               color: "#FF4B1F",
               fontSize: 18,
               letterSpacing: 6,
             }}
           >
-            AUTOMOTIVE DETAILING · ALMATY
+            AUTOMOTIVE DETAILING · {studio.city.toUpperCase()}
           </div>
           <div
             style={{

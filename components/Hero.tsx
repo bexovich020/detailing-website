@@ -7,6 +7,7 @@ import { media } from "@/lib/media";
 import { EASE_EXPO, INTRO_DELAY } from "@/lib/motion";
 import LineReveal from "@/components/ui/LineReveal";
 import MagneticButton from "@/components/ui/MagneticButton";
+import { studio } from "@/lib/studio";
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -65,7 +66,7 @@ export default function Hero() {
       >
         <motion.p {...fade(0)} className="meta mb-4 flex items-center gap-3 md:mb-6">
           <span className="h-1.5 w-1.5 bg-accent" aria-hidden />
-          Премиальный автодетейлинг · Алматы
+          {studio.hero.eyebrow} · {studio.city}
         </motion.p>
 
         <LineReveal
@@ -74,20 +75,20 @@ export default function Hero() {
           immediate
           delay={d + 0.05}
           stagger={0.1}
-          lines={["Детейлинг", "кузова", "и салона"]}
+          lines={[...studio.hero.lines]}
           className="display-xl text-fg"
           lineClassName="[&:nth-child(1)]:text-fg"
         />
 
         <div className="mt-6 flex flex-col gap-6 md:mt-8 md:flex-row md:items-end md:justify-between">
           <motion.p {...fade(0.45)} className="max-w-md text-[15px] leading-relaxed text-fg/70 md:text-base">
-            Полировка, химчистка, керамика и защитная плёнка. Обсудим состояние автомобиля и подскажем, с чего начать.
+            {studio.hero.description}
           </motion.p>
 
           <motion.div {...fade(0.6)} className="flex flex-col gap-3 sm:flex-row">
-            <MagneticButton href="#contact">Узнать стоимость</MagneticButton>
+            <MagneticButton href="#contact">{studio.hero.primaryCta}</MagneticButton>
             <MagneticButton href="#services" variant="ghost">
-              Выбрать услугу
+              {studio.hero.secondaryCta}
             </MagneticButton>
           </motion.div>
         </div>

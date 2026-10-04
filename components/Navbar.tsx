@@ -12,6 +12,7 @@ import {
 import { navLinks } from "@/lib/content";
 import { DISPLAY_PHONE, PHONE_URL, TELEGRAM_URL, WHATSAPP_URL } from "@/lib/contact-links";
 import { EASE_EXPO, EASE_IN_OUT, INTRO_DELAY } from "@/lib/motion";
+import { studio } from "@/lib/studio";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -51,13 +52,13 @@ export default function Navbar() {
             scrolled ? "h-16" : "h-20 md:h-24"
           }`}
         >
-          <a href="#top" className="group flex items-baseline gap-2" aria-label="APEX DETAIL — на главную">
-            <span className="font-display text-xl font-semibold uppercase tracking-[0.2em] text-fg md:text-[22px]">
-              Apex
+          <a href="#top" className="group flex items-baseline gap-2" aria-label={`${studio.name} — на главную`}>
+              <span className="font-display text-xl font-semibold uppercase tracking-[0.2em] text-fg md:text-[22px]">
+              {studio.name.split(" ")[0]}
             </span>
             <span className="h-1.5 w-1.5 bg-accent transition-transform duration-500 ease-expo group-hover:rotate-45" aria-hidden />
             <span className="font-display text-xl font-light uppercase tracking-[0.2em] text-fg/70 md:text-[22px]">
-              Detail
+              {studio.name.split(" ")[1]}
             </span>
           </a>
 

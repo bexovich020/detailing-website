@@ -9,9 +9,7 @@ import { DISPLAY_PHONE, PHONE_URL, TELEGRAM_URL, TELEGRAM_USERNAME, WHATSAPP_URL
 import SectionLabel from "@/components/ui/SectionLabel";
 import LineReveal from "@/components/ui/LineReveal";
 import MagneticButton from "@/components/ui/MagneticButton";
-
-const address = process.env.NEXT_PUBLIC_STUDIO_ADDRESS;
-const hours = process.env.NEXT_PUBLIC_STUDIO_HOURS;
+import { studio } from "@/lib/studio";
 
 export default function ContactOptions() {
   const ref = useRef<HTMLElement>(null);
@@ -22,8 +20,8 @@ export default function ContactOptions() {
   const details = [
     { label: "Телефон", value: DISPLAY_PHONE, href: PHONE_URL },
     { label: "Telegram", value: `@${TELEGRAM_USERNAME}`, href: TELEGRAM_URL, external: true },
-    ...(address ? [{ label: "Адрес", value: address }] : []),
-    ...(hours ? [{ label: "Часы работы", value: hours }] : []),
+    ...(studio.address ? [{ label: "Адрес", value: studio.address }] : []),
+    ...(studio.hours ? [{ label: "Часы работы", value: studio.hours }] : []),
   ];
 
   return (
@@ -38,22 +36,22 @@ export default function ContactOptions() {
         <SectionLabel index="09">Запись</SectionLabel>
         <LineReveal
           id="contact-title"
-          lines={["Готовы вернуть", "автомобилю", "идеальный вид?"]}
+          lines={[...studio.contact.headingLines]}
           className="display-lg mt-6 max-w-5xl text-fg"
         />
         <p className="mt-5 max-w-md text-[15px] leading-relaxed text-fg/70 md:text-base">
-          Расскажите, что хотите сделать с автомобилем. Обсудим подходящую услугу, стоимость и свободные даты.
+          {studio.contact.description}
         </p>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <MagneticButton href={WHATSAPP_URL} external variant="accent" icon={<MessageCircle className="h-4 w-4" strokeWidth={1.6} aria-hidden />}>
-            Написать в WhatsApp
+            {studio.contact.whatsappCta}
           </MagneticButton>
           <MagneticButton href={TELEGRAM_URL} external variant="ghost" icon={<Send className="h-4 w-4" strokeWidth={1.6} aria-hidden />}>
-            Telegram
+            {studio.contact.telegramCta}
           </MagneticButton>
           <MagneticButton href={PHONE_URL} variant="ghost" icon={<Phone className="h-4 w-4" strokeWidth={1.6} aria-hidden />}>
-            Позвонить
+            {studio.contact.phoneCta}
           </MagneticButton>
         </div>
 
